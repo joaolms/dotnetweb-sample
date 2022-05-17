@@ -21,23 +21,27 @@ steps:
   inputs:
     packageType: 'sdk'
     version: $(dotnetSdkVersion)
+  displayName: Use .Net Core $(dotnetSdkVersion) version
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     # feedsToUse: 'select'
+  displayName: dotnet restore
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+  displayName: dotnet build
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: '**/*.csproj'
+  displayName: dotnet test
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -45,7 +49,7 @@ steps:
     publishWebProjects: false
     projects: '**/*.csproj'
     arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
-    modifyOutputPath: false
+  displayName: dotnet publish
 
 - bash: |
     echo $(Build.ArtifactStagingDirectory)
@@ -53,3 +57,4 @@ steps:
     echo '---------------------'
     echo $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
     ls -lha $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
+  displayName: ls -lha
