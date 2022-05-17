@@ -63,6 +63,6 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: '$(Build.BuildId)'
+    ArtifactName: 'dotnet-$(Build.BuildId)'
     publishLocation: 'Container'
   displayName: Publish build artifacts
