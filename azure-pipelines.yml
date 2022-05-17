@@ -54,8 +54,15 @@ steps:
 - bash: |
     echo $(Build.ArtifactStagingDirectory)
     ls -lha $(Build.ArtifactStagingDirectory)
-  displayName: Verificar o artefato
+  displayName: Check artifacts
 
-- publish: '$(Build.ArtifactStagingDirectory)'
-  artifact: drop
-  displayName: Pubicar o arterfato
+# - publish: '$(Build.ArtifactStagingDirectory)'
+#   artifact: drop
+#   displayName: Publish artifacts
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(Build.BuildId)'
+    publishLocation: 'Container'
+  displayName: Publish build artifacts
