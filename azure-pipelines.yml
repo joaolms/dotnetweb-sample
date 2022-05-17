@@ -48,7 +48,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/*.csproj'
-    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
   displayName: dotnet publish
 
 - bash: |
@@ -58,3 +58,4 @@ steps:
 
 - publish: '$(Build.ArtifactStagingDirectory)'
   artifact: drop
+  displayName: Pubicar o arterfato
