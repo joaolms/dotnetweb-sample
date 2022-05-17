@@ -48,7 +48,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/*.csproj'
-    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
   displayName: dotnet publish
 
 - bash: |
@@ -58,3 +58,6 @@ steps:
     echo $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
     ls -lha $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
   displayName: ls -lha
+
+- publish: '$(Build.ArtifactStagingDirectory)'
+  artifact: drop
