@@ -47,3 +47,9 @@ steps:
     arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
     modifyOutputPath: false
 
+- bash: |
+    echo $(Build.ArtifactStagingDirectory)
+    ls -lha $(Build.ArtifactStagingDirectory)
+    echo '---------------------'
+    echo $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
+    ls -lha $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
