@@ -1,0 +1,68 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'Release'
+  dotnetSdkVersion: '3.x'
+
+steps:
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: $(dotnetSdkVersion)
+  displayName: Use .Net Core $(dotnetSdkVersion) version
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    # feedsToUse: 'select'
+  displayName: dotnet restore
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+  displayName: dotnet build
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*.csproj'
+  displayName: dotnet test
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/*.csproj'
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+  displayName: dotnet publish
+
+- bash: |
+    echo $(Build.ArtifactStagingDirectory)
+    ls -lha $(Build.ArtifactStagingDirectory)
+  displayName: Check artifacts
+
+# - publish: '$(Build.ArtifactStagingDirectory)'
+#   artifact: drop
+#   displayName: Publish artifacts
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(Build.BuildId)'
+    publishLocation: 'Container'
+  displayName: Publish build artifacts
