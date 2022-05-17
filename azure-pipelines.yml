@@ -54,10 +54,7 @@ steps:
 - bash: |
     echo $(Build.ArtifactStagingDirectory)
     ls -lha $(Build.ArtifactStagingDirectory)
-    echo '---------------------'
-    echo $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
-    ls -lha $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
-  displayName: ls -lha
+  displayName: Verificar o artefato
 
 - publish: '$(Build.ArtifactStagingDirectory)'
   artifact: drop
