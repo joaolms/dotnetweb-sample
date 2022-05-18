@@ -17,6 +17,15 @@ stages:
 - stage: 'CI'
   displayName: 'CI'
   jobs:
+  - job: 'Sleep'
+    displayName: 'sleep_time'
+    steps:
+    - bash: sleep 30
+      displayName: 'sleep 30'
+
+    - bash: sleep 25
+      displayName: 'sleep 25' 
+
   - job: 'Buid'
     displayName: 'Build'
 
