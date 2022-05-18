@@ -77,13 +77,13 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: DownloadBuildArtifacts@1
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: '$(Build.BuildId)'
-              downloadPath: '$(System.ArtifactsDirectory)'
-            displayName: 'My arficat download'
+          # - task: DownloadBuildArtifacts@1
+          #   inputs:
+          #     buildType: 'current'
+          #     downloadType: 'single'
+          #     artifactName: '$(Build.BuildId)'
+          #     downloadPath: '$(System.ArtifactsDirectory)'
+          #   displayName: 'My arficat download'
               
           # - task: AzureRmWebAppDeployment@4
           #   inputs:
@@ -101,7 +101,8 @@ stages:
               azureSubscription: 'MyPersonalSubscription(e2e5a629-438e-4565-b775-4274c097d5f5)'
               appType: 'webAppLinux'
               appName: 'roddemo'
-              package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              # package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              package: '$(Pipeline.Workspace)/**/*.zip'
               runtimeStack: 'DOTNETCORE|3.1'
               startUpCommand: 'docker dotnetweb.dll'
               # appSettings: '-Port 5000'
