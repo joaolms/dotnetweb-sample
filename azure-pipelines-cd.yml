@@ -80,7 +80,7 @@ stages:
 
           - task: AzureWebApp@1
             inputs:
-              azureSubscription: 'MyPersonalSubscription(e2e5a629-438e-4565-b775-4274c097d5f5)'
+              azureSubscription: 'ado_samples'
               appType: 'webAppLinux'
               appName: 'roddemo'
               package: '$(Pipeline.Workspace)/**/*.zip'
@@ -89,7 +89,7 @@ stages:
 
 - stage: 'cd_prd'
   displayName: 'CD [Prod]'
-  dependsOn: 'dev'
+  dependsOn: 'cd_dev'
   jobs:
   - deployment: Deploy
     environment: demo-production
@@ -100,7 +100,7 @@ stages:
 
           - task: AzureWebApp@1
             inputs:
-              azureSubscription: 'MyPersonalSubscription(e2e5a629-438e-4565-b775-4274c097d5f5)'
+              azureSubscription: 'ado_samples'
               appType: 'webAppLinux'
               appName: 'roddemo2'
               package: '$(Pipeline.Workspace)/**/*.zip'
