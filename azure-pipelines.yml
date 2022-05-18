@@ -104,5 +104,5 @@ stages:
               # package: '$(System.DefaultWorkingDirectory)/**/*.zip'
               package: '$(Pipeline.Workspace)/**/*.zip'
               runtimeStack: 'DOTNETCORE|3.1'
-              startUpCommand: 'docker dotnetweb.dll'
+              startUpCommand: 'dotnet dotnetweb.dll'
               # appSettings: '-Port 5000'
