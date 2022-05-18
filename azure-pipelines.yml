@@ -80,3 +80,23 @@ stages:
               package: '$(Pipeline.Workspace)/**/*.zip'
               runtimeStack: 'DOTNETCORE|3.1'
               startUpCommand: 'dotnet dotnetweb.dll'
+
+- stage: 'cd_prd'
+  displayName: 'CD [Prd]'
+  dependsOn: 'cd_dev'
+  jobs:
+  - deployment: Deploy
+    environment: prod
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'ado_samples'
+              appType: 'webAppLinux'
+              appName: 'demorod1'
+              package: '$(Pipeline.Workspace)/**/*.zip'
+              runtimeStack: 'DOTNETCORE|3.1'
+              startUpCommand: 'dotnet dotnetweb.dll'
