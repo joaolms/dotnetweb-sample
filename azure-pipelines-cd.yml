@@ -67,8 +67,8 @@ stages:
         publishLocation: 'Container'
       displayName: Publish build artifacts
 
-- stage: 'dev'
-  displayName: 'Deploy to the dev environment'
+- stage: 'cd_dev'
+  displayName: 'CD [Dev]'
   dependsOn: CI
   jobs:
   - deployment: Deploy
@@ -87,8 +87,8 @@ stages:
               runtimeStack: 'DOTNETCORE|3.1'
               startUpCommand: 'dotnet dotnetweb.dll'
 
-- stage: 'prd'
-  displayName: 'Deploy to the prd environment'
+- stage: 'cd_prd'
+  displayName: 'CD [Prod]'
   dependsOn: 'dev'
   jobs:
   - deployment: Deploy
