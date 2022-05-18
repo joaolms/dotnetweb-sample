@@ -77,32 +77,32 @@ stages:
       runOnce:
         deploy:
           steps:
-          # - task: DownloadBuildArtifacts@1
-          #   inputs:
-          #     buildType: 'current'
-          #     downloadType: 'single'
-          #     artifactName: '$(Build.BuildId)'
-          #     downloadPath: '$(System.ArtifactsDirectory)'
-          #   displayName: 'My arficat download'
-              
-          # - task: AzureRmWebAppDeployment@4
-          #   inputs:
-          #     ConnectionType: 'AzureRM'
-          #     azureSubscription: 'MyPersonalSubscription(e2e5a629-438e-4565-b775-4274c097d5f5)'
-          #     appType: 'webAppLinux'
-          #     WebAppName: 'roddemo'
-          #     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-          #     RuntimeStack: 'DOTNETCORE|3.1'
-          #     StartupCommand: 'dotnet dotnetweb.dll'
-          #     AppSettings: '-Port 5000'
 
           - task: AzureWebApp@1
             inputs:
               azureSubscription: 'MyPersonalSubscription(e2e5a629-438e-4565-b775-4274c097d5f5)'
               appType: 'webAppLinux'
               appName: 'roddemo'
-              # package: '$(System.DefaultWorkingDirectory)/**/*.zip'
               package: '$(Pipeline.Workspace)/**/*.zip'
               runtimeStack: 'DOTNETCORE|3.1'
               startUpCommand: 'dotnet dotnetweb.dll'
-              # appSettings: '-Port 5000'
+
+- stage: 'prd'
+  displayName: 'Deploy to the prd environment'
+  dependsOn: 'dev'
+  jobs:
+  - deployment: Deploy
+    environment: demo-production
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'MyPersonalSubscription(e2e5a629-438e-4565-b775-4274c097d5f5)'
+              appType: 'webAppLinux'
+              appName: 'roddemo2'
+              package: '$(Pipeline.Workspace)/**/*.zip'
+              runtimeStack: 'DOTNETCORE|3.1'
+              startUpCommand: 'dotnet dotnetweb.dll'
