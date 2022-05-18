@@ -54,12 +54,12 @@ stages:
         ls -lha $(Build.ArtifactStagingDirectory)
       displayName: Check artifacts  
 
-    - task: PublishPipelineArtifact@1
+    - task: PublishBuildArtifacts@1
       inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)'
-        artifact: '$(Build.BuildId)'
-        publishLocation: 'pipeline'
-      displayName: Publish pipeline artifacts
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: '$(Build.BuildId)'
+        publishLocation: 'Container'
+      displayName: Publish build artifacts
 
 - stage: 'cd_dev'
   displayName: 'CD [Dev]'
